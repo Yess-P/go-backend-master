@@ -3,6 +3,7 @@ package api
 import (
 	db "backend-master/db/sqlc"
 	"database/sql"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -40,20 +41,18 @@ type getAccountRequest struct {
 func (server *Server) getAccount(ctx *gin.Context) {
 	var req getAccountRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorREsponse(err))
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-	server.store.GetAccount(ctx, req.ID)
+	account, err := server.store.GetAccount(ctx, req.ID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}
-
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-
 	ctx.JSON(http.StatusOK, account)
 }
 
@@ -65,7 +64,7 @@ type listAccountRequest struct {
 func (server *Server) listAccount(ctx *gin.Context) {
 	var req listAccountRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorREsponse(err))
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
@@ -74,7 +73,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 		Offset: (req.PageID - 1) * req.PageSize,
 	}
 
-	accounts, err := server.store.ListAccounts(ctx, arg)
+	account, err := server.store.ListAccounts(ctx, arg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
