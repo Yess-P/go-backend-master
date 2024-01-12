@@ -8,7 +8,6 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/spf13/viper v1.10.1
 	github.com/stretchr/testify v1.8.4
-	github.com/techschool/simplebank v0.0.0-20231029084543-9544012aa580
 )
 
 require (

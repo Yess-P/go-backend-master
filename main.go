@@ -5,8 +5,6 @@ import (
 	"backend-master/db/util"
 	"database/sql"
 	_ "github.com/lib/pq"
-	"github.com/techschool/simplebank/api"
-	db "github.com/techschool/simplebank/db/sqlc"
 	"log"
 )
 
