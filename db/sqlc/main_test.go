@@ -14,6 +14,7 @@ const (
 )
 
 var testQueries *Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
 	//config, err := util.LoadConfig("../..")
@@ -21,10 +22,12 @@ func TestMain(m *testing.M) {
 	//	log.Fatal("cannot load conf", err)
 	//}
 
-	conn, err := sql.Open(dbDriver, dbSource)
+	var err error
+
+	testDB, err := sql.Open(dbDriver, dbSource)
 	if err != nil {
 		log.Fatal("cannot connct to db", err)
 	}
-	testQueries = New(conn)
+	testQueries = New(testDB)
 	os.Exit(m.Run())
 }
