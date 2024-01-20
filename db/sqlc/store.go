@@ -123,8 +123,11 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 		//fmt.Println(txName, "update account 2")
 		//result.ToAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
 		//	ID:      arg.ToAccountID,
-		//	Balance: account2.Balance - arg.Amount,
+		//	Balance: account2.Balance + arg.Amount,
 		//})
+		//if err != nil {
+		//	return err
+		//}
 
 		// get account -> update its balance
 		if arg.FromAccountID < arg.ToAccountID {
