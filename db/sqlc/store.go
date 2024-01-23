@@ -12,7 +12,6 @@ type Store interface {
 }
 
 // SQLStore provides all functions to execute SQL queries and transactions
-// 트랜젝션을 구현하기 위해 만듬
 type SQLStore struct {
 	db *sql.DB
 	*Queries
@@ -26,7 +25,7 @@ func NewStore(db *sql.DB) Store {
 	}
 }
 
-// execTx executes a function within a database transaction
+// ExecTx executes a function within a database transaction
 func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) error {
 	//BeginTx은 트랜젝션의 custom isolation 옵션을 제공
 	tx, err := store.db.BeginTx(ctx, nil)
@@ -102,32 +101,32 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 			return err
 		}
 
-		//fmt.Println(txName, "get account 1")
-		//account1, err := q.GetAccountForUpdate(ctx, arg.FromAccountID)
-		//if err != nil {
-		//	return err
-		//}
-		//
-		//fmt.Println(txName, "update account 1")
-		//result.FromAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
-		//	ID:      arg.FromAccountID,
-		//	Balance: account1.Balance - arg.Amount,
-		//})
-		//
-		//fmt.Println(txName, "get account 2")
-		//account2, err := q.GetAccountForUpdate(ctx, arg.ToAccountID)
-		//if err != nil {
-		//	return err
-		//}
-		//
-		//fmt.Println(txName, "update account 2")
-		//result.ToAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
-		//	ID:      arg.ToAccountID,
-		//	Balance: account2.Balance + arg.Amount,
-		//})
-		//if err != nil {
-		//	return err
-		//}
+		fmt.Println(txName, "get account 1")
+		account1, err := q.GetAccountForUpdate(ctx, arg.FromAccountID)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(txName, "update account 1")
+		result.FromAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
+			ID:      arg.FromAccountID,
+			Balance: account1.Balance - arg.Amount,
+		})
+
+		fmt.Println(txName, "get account 2")
+		account2, err := q.GetAccountForUpdate(ctx, arg.ToAccountID)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(txName, "update account 2")
+		result.ToAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
+			ID:      arg.ToAccountID,
+			Balance: account2.Balance + arg.Amount,
+		})
+		if err != nil {
+			return err
+		}
 
 		// get account -> update its balance
 		if arg.FromAccountID < arg.ToAccountID {
@@ -135,7 +134,7 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 		} else {
 			result.ToAccount, result.FromAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
 		}
-		return nil
+		return err
 	})
 
 	return result, err

@@ -99,20 +99,20 @@ func TestListAccount(t *testing.T) {
 	}
 
 	// 이슈 코드
-	//arg := ListAccountsParams{
-	//	Limit:  5,
-	//	Offset: 5,
-	//}
-	//
-	//for i := 0; i < 10; i++ {
-	//	createRandomAccount(t)
-	//}
-	//
-	//accounts, err := testQueries.ListAccounts(context.Background(), arg)
-	//require.NoError(t, err)
-	//require.Len(t, accounts, 5)
-	//
-	//for _, account := range accounts {
-	//	require.NotEmpty(t, account)
-	//}
+	arg = ListAccountsParams{
+		Limit:  5,
+		Offset: 5,
+	}
+
+	for i := 0; i < 10; i++ {
+		createRandomAccount(t)
+	}
+
+	accounts, err = testQueries.ListAccounts(context.Background(), arg)
+	require.NoError(t, err)
+	require.Len(t, accounts, 5)
+
+	for _, account := range accounts {
+		require.NotEmpty(t, account)
+	}
 }
