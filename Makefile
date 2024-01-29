@@ -25,4 +25,9 @@ server:
 mock:
 	 mockgen -package mockdb  -destination db/mock/store.go  backend-master/db/sqlc Store
 
-.PHONY: postgres createdb dropdb migrationup migrationdown sqlc test server mock
+add_users:
+	migrate create -ext sql -dir db/migration -seq add_users
+new_migration:
+	migrate create -ext sql -dir db/migration -seq add_session
+
+.PHONY: postgres createdb dropdb migrationup migrationdown sqlc test server mock add_users new_migration
