@@ -1,7 +1,7 @@
 package db
 
 import (
-	"backend-master/db/util"
+	"backend-master/util"
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"

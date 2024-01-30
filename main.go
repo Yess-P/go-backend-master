@@ -3,7 +3,7 @@ package main
 import (
 	"backend-master/api"
 	db "backend-master/db/sqlc"
-	"backend-master/db/util"
+	"backend-master/util"
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"

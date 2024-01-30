@@ -1,7 +1,7 @@
 package db
 
 import (
-	"backend-master/db/util"
+	"backend-master/util"
 	"context"
 	"database/sql"
 	"github.com/stretchr/testify/require"

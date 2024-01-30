@@ -3,7 +3,7 @@ package api
 import (
 	mockdb "backend-master/db/mock"
 	db "backend-master/db/sqlc"
-	"backend-master/db/util"
+	"backend-master/util"
 	"bytes"
 	"database/sql"
 	"encoding/json"
