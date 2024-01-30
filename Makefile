@@ -10,8 +10,14 @@ dropdb:
 migrationup:
 	migrate -path db/migration -database "postgresql://root:7912@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+migrationup1:
+	migrate -path db/migration -database "postgresql://root:7912@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+
 migrationdown:
 	migrate -path db/migration -database "postgresql://root:7912@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+migrationdown1:
+	migrate -path db/migration -database "postgresql://root:7912@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
 sqlc:
 	sqlc generate
@@ -30,4 +36,4 @@ add_users:
 new_migration:
 	migrate create -ext sql -dir db/migration -seq add_session
 
-.PHONY: postgres createdb dropdb migrationup migrationdown sqlc test server mock add_users new_migration
+.PHONY: postgres createdb dropdb migrationup migrationdown migrationup1 migrationdown1 sqlc test server mock add_users new_migration
