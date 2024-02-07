@@ -44,6 +44,8 @@ func (server *Server) createUser(ctx *gin.Context) {
 		Email:          req.Email,
 	}
 
+	//arg = db.CreateUserParams{}
+
 	//account, err := server.store.CreateAccount(ctx, arg)
 	user, err := server.store.CreateUser(ctx, arg)
 	if err != nil {
