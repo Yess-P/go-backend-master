@@ -16,7 +16,7 @@ type PasetoMaker struct {
 // NewPasetoMaker creates a new PasetoMaker
 func NewPasetoMaker(symmetricKey string) (Maker, error) {
 	if len(symmetricKey) != chacha20poly1305.KeySize {
-		return nil, fmt.Errorf("invaild key size: must be exactly %d charactoers", chacha20poly1305.KeySize)
+		return nil, fmt.Errorf("invaild key size: must be exactly %d characters", chacha20poly1305.KeySize)
 	}
 
 	maker := &PasetoMaker{
